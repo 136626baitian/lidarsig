@@ -1,0 +1,13 @@
+geoCfg:
+  latitude: 30.6
+  longitude: 114.3
+  altitude: 0.0
+skyCfg:
+  model: 'sbdart'
+aerCfg:
+  scheme: 'local-file'
+  aerOptFilepath: 'C:\Users\dong\Desktop\lidar\LiSAR-master\data\aerosol_optical_properties.nc'
+meteorCfg:
+  meteorSource: 'local-sonde'
+  sondePath: 'C:\Users\dong\Desktop\lidar\LiSAR-master\data\radiosonde_57494_20180101_0000.nc'
+  sondeStation: 'wuhan'

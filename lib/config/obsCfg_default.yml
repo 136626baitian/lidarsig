@@ -1,0 +1,15 @@
+geoCfg:
+  latitude: 30.0
+  longitude: 114.0
+  altitude: 0.0
+measCfg:
+  type: 'normal'   # normal, depol-cali
+skyCfg:
+  model: 'nighttime'
+aerCfg:
+  scheme: 'simple'
+  aerOptFilepath: ''
+meteorCfg:
+  meteorSource: 'local-sonde'
+  sondePath: 'C:\Users\dong\Desktop\lidar\LiSAR-master\data\Radiosonde'
+  sondeStation: 'wuhan'

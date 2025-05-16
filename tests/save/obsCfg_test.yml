@@ -1,0 +1,13 @@
+geoCfg:
+  latitude: 30.0
+  longitude: 114.0
+  altitude: 0.0
+skyCfg:
+  model: 'daytime'
+aerCfg:
+  scheme: 'local-file'
+  aerOptFilepath: 'C:\Users\dong\Desktop\lidar\LiSAR-master\data\aerosol_optical_properties.nc'
+meteorCfg:
+  meteorSource: 'local-sonde'
+  sondePath: 'C:\Users\dong\Desktop\lidar\LiSAR-master\data\Radiosonde'
+  sondeStation: 'wuhan'

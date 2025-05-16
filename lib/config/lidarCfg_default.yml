@@ -1,0 +1,141 @@
+generalCfg:
+  lasers: ['UV', 'VIS', 'IR']
+  laserWavelengths: [354.8, 532, 1064]   # nm
+  laserEnergy: [1, 1, 1]   # mJ per shot
+  laserRepRate: 1000   # shots per second
+  laserDivergence: [0.05, 0.05, 0.05]   # laser divergence. mrad
+  teleDiameter: 300   # diameter of telescope. mm
+  teleLaserDist: [200, 200, 200]   # distance between telescope and laser beam. mm
+  apertureDiameter: 1   # diameter of aperture. mm
+  teleFL: 2000   # focal length of receiving telescope. mm
+  zenithAngle: 0   # zenith angle (degree)
+  binWidth: 100   # bin width. ns
+  binNum: 2500   # bin number
+  accShots: 5000   # accumulation shots
+  nPretrigger: 20
+  channelLabels: ['ch_355p', 'ch_355s', 'ch_353', 'ch_354', 'ch_386', 'ch_407', 'ch_532p', 'ch_532s', 'ch_607', 'ch_1064p', 'ch_1064s', 'ch_1056']
+  channelCfg:
+    ch_355p:
+      channelType: 'p'
+      exciteWLInd: 1   # index of excited wavelength
+      filterCWL: 354.82   # filter central wavelength. nm
+      filterFWHM: 0.3   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_355s:
+      channelType: 's'
+      exciteWLInd: 1   # index of excited wavelength
+      filterCWL: 354.82   # filter central wavelength. nm
+      filterFWHM: 0.3   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_353:
+      channelType: 'r'
+      exciteWLInd: 1   # index of excited wavelength
+      filterCWL: 353.3   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_354:
+      channelType: 'r'
+      exciteWLInd: 1   # index of excited wavelength
+      filterCWL: 354.2   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_386:
+      channelType: 'r'
+      exciteWLInd: 1   # index of excited wavelength
+      filterCWL: 386   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_407:
+      channelType: 'r'
+      exciteWLInd: 1   # index of excited wavelength
+      filterCWL: 407.6   # filter central wavelength. nm
+      filterFWHM: 0.5   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_532p:
+      channelType: 'p'
+      exciteWLInd: 2   # index of excited wavelength
+      filterCWL: 532   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_532s:
+      channelType: 's'
+      exciteWLInd: 2   # index of excited wavelength
+      filterCWL: 532   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_607:
+      channelType: 'r'
+      exciteWLInd: 2   # index of excited wavelength
+      filterCWL: 607   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 5   # deadtime (ns)
+      darkCount: 1000
+    ch_1064p:
+      channelType: 'p'
+      exciteWLInd: 3   # index of excited wavelength
+      filterCWL: 1064   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 22   # deadtime (ns)
+      darkCount: 1000
+    ch_1064s:
+      channelType: 's'
+      exciteWLInd: 3   # index of excited wavelength
+      filterCWL: 1064   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 22   # deadtime (ns)
+      darkCount: 1000
+    ch_1056:
+      channelType: 'r'
+      exciteWLInd: 3   # index of excited wavelength
+      filterCWL: 1056   # filter central wavelength. nm
+      filterFWHM: 0.2   # FWHM of filter. nm
+      filterPeakTrans: 0.9   # peak transmission of the optical filter
+      optEffi: 0.3   # optical efficiency
+      quantumEffi: 0.6   # quantum efficiency
+      deadtime: 22   # deadtime (ns)
+      darkCount: 1000
+
+metadata:
+  lidarLabel: 'INAST'
+  lidarVersion: '1'

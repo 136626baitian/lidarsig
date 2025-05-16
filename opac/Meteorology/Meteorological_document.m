@@ -1,0 +1,71 @@
+%% 按3小时间隔处理一周数据 本代码用于处理EAR-5气象数据，并转换为雷达模拟函数lidarSigSimulator可用的气象文件
+clc; close all;
+global LISAR_ENVS;
+
+% 初始化路径与参数
+savePath = fullfile(LISAR_ENVS.RootDir, 'opac', 'Meteorology_result');
+ncfile = 'C:\Users\dong\Desktop\天空背景辐射\cams_shuju\武汉市2024.11.11-11.17\136fef89850309267f2d12bd7935c75e.nc';
+% 预定义高度层（保持原状）
+altitude = [112,339,549,762,988,1224,1454,1696,1949,2208,2480,3006,3592,4243,4983,...
+            5953,7095,7689,8715,9958,11355,12197,13145,14211,15049,16506,18288,...
+            20650,22803,26005,28242,31163,32544,33585,35060,36144,38013]; 
+
+% 读取时间轴并筛选3小时间隔（可修改间隔）
+valid_time = ncread(ncfile, 'valid_time');
+timeStamps = datetime(valid_time, 'ConvertFrom', 'posixtime', 'TimeZone', 'UTC');
+threeHourMask = hour(timeStamps) == 0 | mod(hour(timeStamps),3) == 0; % 00:00或3倍数小时
+selectedTimes = timeStamps(threeHourMask);
+
+% 主循环处理每个3小时点
+for i = 1:length(selectedTimes)
+    currentTime = selectedTimes(i);
+    
+    %% -- 动态生成文件名（含跨月判断）--
+    [y,m,d] = ymd(currentTime);
+    timeLabel = datestr(currentTime, 'yyyymmdd_HHMM');
+    outFile = fullfile(savePath, ...
+        ['radiosonde_wuhan_', timeLabel, '.nc']);
+    
+    %% -- 数据读取（自动定位索引）--
+    [~,timeIdx] = ismember(currentTime, timeStamps); 
+    startIdx = [1 1 1 timeIdx];
+    count = [1 1 Inf 1]; 
+    
+    t_fahrenheit = squeeze(ncread(ncfile, 't', startIdx, count));
+    q_original = squeeze(ncread(ncfile, 'q', startIdx, count));
+    pressure_level = ncread(ncfile, 'pressure_level');
+    
+    %% -- 单位转换（保持原状）--华氏度转摄氏度   湿度转水汽混合比
+    t_celsius = t_fahrenheit - 273.15;
+    water_vapor_mixing_ratio = q_original ./ (1 - q_original);
+    
+    %% -- 写入NC文件（维度优化）--
+    mode = netcdf.getConstant('NETCDF4');
+    ncID = netcdf.create(outFile, bitor(mode, netcdf.getConstant('CLOBBER')));
+    
+    % 定义单时间点维度
+    dimID_alt = netcdf.defDim(ncID, 'altitude', length(altitude));
+    dimID_time = netcdf.defDim(ncID, 'valid_time', 1); % 单时间点
+    
+    % 变量定义（时间维度作为第一维）
+    varID_time = netcdf.defVar(ncID, 'valid_time', 'NC_DOUBLE', dimID_time);
+    varID_alt = netcdf.defVar(ncID, 'altitude', 'NC_FLOAT', dimID_alt);
+    varID_pressure = netcdf.defVar(ncID, 'pressure', 'NC_FLOAT', dimID_alt);
+    varID_temp = netcdf.defVar(ncID, 'temperature', 'NC_FLOAT', [dimID_time, dimID_alt]);
+    varID_mixratio = netcdf.defVar(ncID, 'water_vapor_mixing_ratio', 'NC_FLOAT', [dimID_time, dimID_alt]);
+    
+    % 属性添加
+    netcdf.putAtt(ncID, varID_alt, 'units', 'meters');
+    netcdf.putAtt(ncID, varID_time, 'units', 'seconds since 1970-01-01 00:00:00');
+    netcdf.putAtt(ncID, netcdf.getConstant('GLOBAL'), 'creation_date', datestr(now));
+    
+    % 写入数据
+    netcdf.endDef(ncID);
+    netcdf.putVar(ncID, varID_time, posixtime(currentTime));
+    netcdf.putVar(ncID, varID_alt, altitude);
+    netcdf.putVar(ncID, varID_pressure, pressure_level);
+    netcdf.putVar(ncID, varID_temp, t_celsius');
+    netcdf.putVar(ncID, varID_mixratio, water_vapor_mixing_ratio');
+    netcdf.close(ncID);
+end
+
